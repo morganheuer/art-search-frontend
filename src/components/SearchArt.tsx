@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 const SearchArt = () => {
   const [query, setQuery] = useState("");
   const [objects, setObjects] = useState([]);
   const [images, setImages] = useState<string[]>([]);
 
+  const URL = "https://collectionapi.metmuseum.org/public/collection/v1";
+
   const getObjectsFromSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
-      .get(
-        `https://collectionapi.metmuseum.org/public/collection/v1/search?q=${query}&hasImages=true&isPublicDomain=true`
-      )
+      .get(`${URL}/search`, {
+        params: {
+          q: { query },
+          hasImages: true,
+          isPublicDomain: true,
+          artistDisplayName: { query },
+        },
+      })
       .then((res) => {
-        const objectIDs = res.data.objectIDs.slice(0, 10);
+        const objectIDs = res.data.objectIDs.slice(0, 20);
         setObjects(objectIDs);
         getImages();
       })
@@ -20,14 +27,12 @@ const SearchArt = () => {
         console.log(err);
       });
   };
-
+  // get images for all current objects
   const getImages = () => {
     let img: string[] = [];
     for (let i of objects) {
       axios
-        .get(
-          `https://collectionapi.metmuseum.org/public/collection/v1/objects/${i}`
-        )
+        .get(`${URL}/objects/${i}`)
         .then((res) => {
           let imgsrc = res.data.primaryImageSmall;
           console.log(imgsrc);
