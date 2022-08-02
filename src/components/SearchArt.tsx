@@ -3,49 +3,55 @@ import axios from "axios";
 const SearchArt = () => {
   const [query, setQuery] = useState("");
   const [objects, setObjects] = useState([]);
-  const [images, setImages] = useState<string[]>([]);
+  const [artData, setArtData] = useState<any[]>([]);
+  // add lopading state
 
   const URL = "https://collectionapi.metmuseum.org/public/collection/v1";
 
   const getObjectsFromSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(query);
     axios
       .get(`${URL}/search`, {
         params: {
-          q: { query },
+          q: query,
+          isHighlight: true,
           hasImages: true,
           isPublicDomain: true,
-          artistDisplayName: { query },
+          artistDisplayName: query,
         },
       })
       .then((res) => {
         const objectIDs = res.data.objectIDs.slice(0, 20);
+        console.log(objectIDs);
         setObjects(objectIDs);
-        getImages();
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  // get images for all current objects
-  const getImages = () => {
-    let img: string[] = [];
+
+  const getArtDataWaiting = () => {
+    const pendingData: Promise<{}>[] = [];
     for (let i of objects) {
-      axios
-        .get(`${URL}/objects/${i}`)
-        .then((res) => {
-          let imgsrc = res.data.primaryImageSmall;
-          console.log(imgsrc);
-          if (imgsrc) {
-            img.push(imgsrc);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      pendingData.push(
+        axios
+          .get(`${URL}/objects/${i}`)
+          .then((res) => {
+            return res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      );
     }
-    setImages(img);
+    Promise.all(pendingData).then((res) => {
+      setArtData(res);
+      console.log(artData);
+    });
   };
+
+  useEffect(getArtDataWaiting, [objects]);
 
   return (
     <div>
@@ -61,8 +67,8 @@ const SearchArt = () => {
         <button type="submit">Search</button>
       </form>
       <div>
-        {images.map((image) => (
-          <img alt="artwork" src={image} width="20%"></img>
+        {artData.map((art) => (
+          <img alt="artwork" src={art.primaryImageSmall} width="20%"></img>
         ))}
       </div>
     </div>
