@@ -10,30 +10,35 @@ const SearchArt = () => {
 
   const URL = "https://collectionapi.metmuseum.org/public/collection/v1";
 
-  const getObjectsFromSearch = () => {
-    axios
-      .get(`${URL}/search`, {
-        params: {
-          hasImages: true,
-          artistOrCulture: true,
-          q: query,
-        },
-      })
-      .then((res) => {
-        const objectIDs = res.data.objectIDs.slice(0, 70);
-        setObjects(objectIDs);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  useEffect(() => {
+    const getObjectsFromSearch = () => {
+      axios
+        .get(`${URL}/search`, {
+          params: {
+            hasImages: true,
+            artistOrCulture: true,
+            q: query,
+          },
+        })
+        .then((res) => {
+          const objectIDs = res.data.objectIDs.slice(0, 100);
+          setObjects(objectIDs);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    if (query) {
+      getObjectsFromSearch();
+    }
+  }, [query]);
 
   const getArtDataWaiting = () => {
     const pendingData: Promise<IArtData>[] = [];
     for (let i of objects) {
       pendingData.push(
         axios
-          .get(`${URL}/objects/${i}`)
+          .get(`${URL}/objects/${i}`, { validateStatus: () => true })
           .then((res) => {
             return res.data;
           })
@@ -54,7 +59,6 @@ const SearchArt = () => {
     const form = e.target as HTMLFormElement;
     const input = form.querySelector("#searchText") as HTMLInputElement;
     setQuery(input.value);
-    getObjectsFromSearch();
   };
 
   return (
@@ -70,9 +74,7 @@ const SearchArt = () => {
           // value={query}
           // onChange={(e) => setQuery(e.target.value)}
         />
-        <button className="searchButton" type="submit">
-          Search
-        </button>
+        <button className="searchButton">Search</button>
       </form>
       <div className="art-container">
         {artData.map((art) => (

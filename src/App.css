@@ -27,6 +27,7 @@
   min-width: 0;
   padding: calc(8px + 0.25vw);
   text-overflow: ellipsis;
+  font-size: 18px;
 }
 
 .searchButton {
@@ -35,6 +36,7 @@
   padding-right: calc(8px + 0.25vw);
   position: relative;
   width: 20%;
+  font-size: 18px;
 }
 
 .art-container {
