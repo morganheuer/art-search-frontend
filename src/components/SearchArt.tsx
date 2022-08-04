@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import Card from "./Card";
 import { IArtData } from "./IArtData";
@@ -10,26 +10,17 @@ const SearchArt = () => {
 
   const URL = "https://collectionapi.metmuseum.org/public/collection/v1";
 
-  const getObjectsFromSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(query);
+  const getObjectsFromSearch = () => {
     axios
       .get(`${URL}/search`, {
         params: {
-          // isPublicDomain: true,
-          // artistDisplayName: query,
-          q: query,
-          // isHighlight: true,
-          // departmentId: 11,
           hasImages: true,
-          // searchField: "ArtistCulture",
-
-          // artistOrCulture: true,
+          artistOrCulture: true,
+          q: query,
         },
       })
       .then((res) => {
-        const objectIDs = res.data.objectIDs.slice(0, 50);
-        console.log(objectIDs);
+        const objectIDs = res.data.objectIDs.slice(0, 70);
         setObjects(objectIDs);
       })
       .catch((err) => {
@@ -44,7 +35,6 @@ const SearchArt = () => {
         axios
           .get(`${URL}/objects/${i}`)
           .then((res) => {
-            console.log(res.data.primaryImageSmall);
             return res.data;
           })
           .catch((err) => {
@@ -59,17 +49,26 @@ const SearchArt = () => {
 
   useEffect(getArtDataWaiting, [objects]);
 
+  const search = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const input = form.querySelector("#searchText") as HTMLInputElement;
+    setQuery(input.value);
+    getObjectsFromSearch();
+  };
+
   return (
     <div className="searchArt">
-      <form className="searchForm" onSubmit={getObjectsFromSearch}>
+      <form className="searchForm" onSubmit={(event) => search(event)}>
         <label htmlFor="query"></label>
         <input
           type="text"
           name="query"
+          id="searchText"
           className="searchInput"
           placeholder={`Try "Monet" or "Van Gogh"`}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          // value={query}
+          // onChange={(e) => setQuery(e.target.value)}
         />
         <button className="searchButton" type="submit">
           Search
