@@ -6,6 +6,7 @@ const SearchArt = () => {
   const [query, setQuery] = useState("");
   const [objects, setObjects] = useState([]);
   const [artData, setArtData] = useState<IArtData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   // add lopading state
 
   const URL = "https://collectionapi.metmuseum.org/public/collection/v1";
@@ -34,6 +35,7 @@ const SearchArt = () => {
   }, [query]);
 
   const getArtDataWaiting = () => {
+    setIsLoading(true);
     const pendingData: Promise<IArtData>[] = [];
     for (let i of objects) {
       pendingData.push(
@@ -49,6 +51,8 @@ const SearchArt = () => {
     }
     Promise.all(pendingData).then((res) => {
       setArtData(res);
+      console.log(res);
+      setIsLoading(false);
     });
   };
 
@@ -77,9 +81,11 @@ const SearchArt = () => {
         <button className="searchButton">Search</button>
       </form>
       <div className="art-container">
-        {artData.map((art) => (
-          <Card key={art.objectID} art={art} query={query} />
-        ))}
+        {isLoading && <p>Loading...</p>}
+        {!isLoading &&
+          artData.map((art) => (
+            <Card key={art.objectID} art={art} query={query} />
+          ))}
       </div>
     </div>
   );

@@ -2,10 +2,7 @@ import { IArtData } from "./IArtData";
 
 const Card = (props: { art: IArtData; query: string }) => {
   const { art } = props;
-  if (
-    art.primaryImageSmall &&
-    props.query.toLowerCase() === art.artistDisplayName.toLowerCase()
-  ) {
+  if (art.primaryImageSmall && art.artistDisplayName && art.isPublicDomain) {
     return (
       <div className="result-object">
         <div className="image-container">
