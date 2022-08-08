@@ -8,6 +8,7 @@ const SearchArt = () => {
   const [artData, setArtData] = useState<IArtData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [cards, setCards] = useState<IArtData[]>([]);
 
   const URL = "https://collectionapi.metmuseum.org/public/collection/v1";
 
@@ -69,6 +70,23 @@ const SearchArt = () => {
     setQuery(input.value);
   };
 
+  const addToDeck = (id: number) => {
+    const card: IArtData | undefined = artData.find(
+      (item) => item.objectID === id
+    );
+    if (card !== undefined) {
+      if (cards) {
+        let array: IArtData[] = cards;
+        array.push(card);
+        setCards([...array]);
+      } else {
+        setCards([card]);
+      }
+    }
+
+    console.log(cards);
+  };
+
   return (
     <div className="searchArt">
       <form className="searchForm" onSubmit={(event) => search(event)}>
@@ -78,9 +96,7 @@ const SearchArt = () => {
           name="query"
           id="searchText"
           className="searchInput"
-          placeholder={`Try "Monet" or "Van Gogh"`}
-          // value={query}
-          // onChange={(e) => setQuery(e.target.value)}
+          placeholder={`Try "Degas" or "Van Gogh"`}
         />
         <button className="searchButton">Search</button>
       </form>
@@ -89,7 +105,12 @@ const SearchArt = () => {
         {isError && <p>No results matching your search for "{query}"</p>}
         {!isLoading &&
           artData.map((art) => (
-            <Card key={art.objectID} art={art} query={query} />
+            <Card
+              key={art.objectID}
+              art={art}
+              query={query}
+              addToDeck={addToDeck}
+            />
           ))}
       </div>
     </div>

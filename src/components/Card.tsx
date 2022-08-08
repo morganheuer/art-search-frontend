@@ -1,6 +1,6 @@
 import { IArtData } from "./IArtData";
 
-const Card = (props: { art: IArtData; query: string }) => {
+const Card = (props: { art: IArtData; query: string; addToDeck: any }) => {
   const { art } = props;
   if (art.primaryImageSmall && art.artistDisplayName && art.isPublicDomain) {
     return (
@@ -13,6 +13,11 @@ const Card = (props: { art: IArtData; query: string }) => {
           <div className="attribution">
             {art.artistDisplayName}, {art.objectDate}
           </div>
+        </div>
+        <div>
+          <button onClick={() => props.addToDeck(art.objectID)}>
+            Add to Deck
+          </button>
         </div>
       </div>
     );
