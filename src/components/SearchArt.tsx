@@ -100,6 +100,11 @@ const SearchArt = () => {
         />
         <button className="searchButton">Search</button>
       </form>
+      {/* <div className="art-container">
+        {cards.map((card) => (
+          <Card key={card.objectID} art={card} addToDeck={addToDeck} />
+        ))}
+      </div> */}
       <div className="art-container">
         {isLoading && <p>Loading...</p>}
         {isError && <p>No results matching your search for "{query}"</p>}
@@ -108,8 +113,8 @@ const SearchArt = () => {
             <Card
               key={art.objectID}
               art={art}
-              query={query}
               addToDeck={addToDeck}
+              deck={cards}
             />
           ))}
       </div>

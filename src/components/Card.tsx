@@ -1,7 +1,8 @@
 import { IArtData } from "./IArtData";
 
-const Card = (props: { art: IArtData; query: string; addToDeck: any }) => {
+const Card = (props: { art: IArtData; addToDeck: any; deck: IArtData[] }) => {
   const { art } = props;
+  const isFavorite = props.deck.find((element) => element === art);
   if (art.primaryImageSmall && art.artistDisplayName && art.isPublicDomain) {
     return (
       <div className="result-object">
@@ -15,9 +16,11 @@ const Card = (props: { art: IArtData; query: string; addToDeck: any }) => {
           </div>
         </div>
         <div>
-          <button onClick={() => props.addToDeck(art.objectID)}>
-            Add to Deck
-          </button>
+          {!isFavorite && (
+            <button onClick={() => props.addToDeck(art.objectID)}>
+              Add to Deck
+            </button>
+          )}
         </div>
       </div>
     );
