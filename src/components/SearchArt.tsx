@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import Card from "./Card";
+import Favorite from "./Favorites";
 import { IArtData } from "./IArtData";
 const SearchArt = () => {
   const [query, setQuery] = useState("");
@@ -18,7 +19,7 @@ const SearchArt = () => {
         .get(`${URL}/search`, {
           params: {
             hasImages: true,
-            artistOrCulture: true,
+            // artistOrCulture: true,
             q: query,
           },
         })
@@ -100,11 +101,11 @@ const SearchArt = () => {
         />
         <button className="searchButton">Search</button>
       </form>
-      {/* <div className="art-container">
+      <div className="art-container">
         {cards.map((card) => (
-          <Card key={card.objectID} art={card} addToDeck={addToDeck} />
+          <Favorite key={card.objectID} card={card} />
         ))}
-      </div> */}
+      </div>
       <div className="art-container">
         {isLoading && <p>Loading...</p>}
         {isError && <p>No results matching your search for "{query}"</p>}
