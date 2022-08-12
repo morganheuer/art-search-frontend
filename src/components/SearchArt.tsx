@@ -10,6 +10,7 @@ const SearchArt = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [cards, setCards] = useState<IArtData[]>([]);
+  const [showFavorites, setShowFavorites] = useState(false);
 
   const URL = "https://collectionapi.metmuseum.org/public/collection/v1";
 
@@ -88,6 +89,10 @@ const SearchArt = () => {
     console.log(cards);
   };
 
+  const show = () => {
+    setShowFavorites(true);
+  };
+
   return (
     <div className="searchArt">
       <form className="searchForm" onSubmit={(event) => search(event)}>
@@ -101,10 +106,10 @@ const SearchArt = () => {
         />
         <button className="searchButton">Search</button>
       </form>
+      <button onClick={show}>Show me my favorites</button>
       <div className="art-container">
-        {cards.map((card) => (
-          <Favorite key={card.objectID} card={card} />
-        ))}
+        {showFavorites &&
+          cards.map((card) => <Favorite key={card.objectID} card={card} />)}
       </div>
       <div className="art-container">
         {isLoading && <p>Loading...</p>}
