@@ -89,8 +89,12 @@ const SearchArt = () => {
     console.log(cards);
   };
 
-  const show = () => {
-    setShowFavorites(true);
+  const showHide = () => {
+    if (showFavorites) {
+      setShowFavorites(false);
+    } else {
+      setShowFavorites(true);
+    }
   };
 
   return (
@@ -106,15 +110,24 @@ const SearchArt = () => {
         />
         <button className="searchButton">Search</button>
       </form>
-      <button onClick={show}>Show me my favorites</button>
-      <div className="art-container">
-        {showFavorites &&
-          cards.map((card) => <Favorite key={card.objectID} card={card} />)}
-      </div>
+      {cards && (
+        <button onClick={showHide}>
+          {showFavorites ? "Hide" : "Show"} my favorites
+        </button>
+      )}
+      {showFavorites && (
+        <div className="art-container">
+          {cards.map((card) => (
+            <Favorite key={card.objectID} card={card} />
+          ))}
+        </div>
+      )}
+
       <div className="art-container">
         {isLoading && <p>Loading...</p>}
         {isError && <p>No results matching your search for "{query}"</p>}
         {!isLoading &&
+          !showFavorites &&
           artData.map((art) => (
             <Card
               key={art.objectID}
