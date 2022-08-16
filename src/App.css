@@ -11,7 +11,7 @@
 .searchForm {
   grid-gap: calc(8px + 0.25vw);
   display: flex;
-  margin-bottom: calc(16px + 0.5vw);
+  margin-bottom: calc(8px + 0.25vw);
   padding: calc(24px + 0.75vw) 7.5vw;
 }
 
@@ -30,21 +30,47 @@
   font-size: 1.2rem;
 }
 
-.searchButton {
-  border: 1px solid rgba(0, 0, 0, 0.75);
+.button {
+  border: 2px solid rgba(0, 0, 0, 0.75);
   border-radius: 50px;
-  padding-right: calc(10px + 0.25vw);
   position: relative;
-  width: 25%;
-  font-size: 1.2rem;
-  background-color: rgba(0, 0, 0, 0.75);
   color: white;
   transition: background-color 250ms;
   cursor: pointer;
 }
 
-.searchButton:hover {
-  background-color: rgba(0, 0, 0, 0.85);
+#searchButton {
+  padding-right: calc(10px + 0.25vw);
+  width: 25%;
+  font-size: 1.2rem;
+  background-color: rgba(82, 50, 73, 0.75);
+}
+
+#searchButton:hover {
+  background-color: rgba(82, 50, 73, 0.95);
+}
+
+#showFavoriteButton {
+  padding: 8px;
+  width: 25%;
+  font-size: 1.1rem;
+  background-color: rgba(60, 73, 63, 0.75);
+  margin-bottom: calc(8px + 0.25vw);
+}
+
+#showFavoriteButton:hover {
+  background-color: rgba(60, 73, 63, 0.95);
+}
+
+#addFavoriteButton {
+  padding: 8px;
+  width: 70%;
+  font-size: 0.8rem;
+  background-color: rgba(60, 73, 63, 0.75);
+}
+
+#addFavoriteButton:hover {
+  background-color: rgba(60, 73, 63, 0.95);
 }
 
 .art-container {
@@ -69,6 +95,33 @@
   display: block;
   overflow: hidden;
   padding: calc(8px + 0.25vw);
+}
+
+img {
+  border: solid 2px;
+  border-bottom-color: #ffe;
+  border-left-color: #eed;
+  border-right-color: #eed;
+  border-top-color: #ccb;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.frame {
+  background-color: #ddc;
+  border: solid 5vmin #eee;
+  border-bottom-color: #fff;
+  border-left-color: #eee;
+  border-radius: 2px;
+  border-right-color: #eee;
+  border-top-color: #ddd;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25) inset,
+    0 5px 10px 5px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 20px;
+  position: relative;
+  text-align: center;
 }
 
 .result-object .image-container {

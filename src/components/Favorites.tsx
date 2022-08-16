@@ -5,14 +5,8 @@ const Favorite = (props: { card: IArtData }) => {
   if (card) {
     return (
       <div className="result-object">
-        <div className="image-container">
+        <div className="frame">
           <img alt={card.title} src={card.primaryImageSmall}></img>
-        </div>
-        <div className="info">
-          <div className="title">{card.title}</div>
-          <div className="attribution">
-            {card.artistDisplayName}, {card.objectDate}
-          </div>
         </div>
       </div>
     );

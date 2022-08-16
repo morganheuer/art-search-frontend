@@ -20,7 +20,6 @@ const SearchArt = () => {
         .get(`${URL}/search`, {
           params: {
             hasImages: true,
-            // artistOrCulture: true,
             q: query,
           },
         })
@@ -108,10 +107,12 @@ const SearchArt = () => {
           className="searchInput"
           placeholder={`Try "Degas" or "Van Gogh"`}
         />
-        <button className="searchButton">Search</button>
+        <button className="button" id="searchButton">
+          Search
+        </button>
       </form>
-      {cards && (
-        <button onClick={showHide}>
+      {cards.length !== 0 && (
+        <button className="button" id="showFavoriteButton" onClick={showHide}>
           {showFavorites ? "Hide" : "Show"} my favorites
         </button>
       )}
