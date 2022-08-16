@@ -20,13 +20,13 @@ const Card = (props: { art: IArtData; addToDeck: any; deck: IArtData[] }) => {
             {art.artistDisplayName}, {art.objectDate}
           </div>
         </div>
-        <div>
+        <div id="container">
           <button
             className="button"
             id="addFavoriteButton"
             onClick={() => props.addToDeck(art.objectID)}
           >
-            Add to Favorites
+            <span id="heart">♥</span> Add to Favorites
           </button>
         </div>
       </div>
