@@ -5,14 +5,14 @@
 .searchArt {
   max-width: 100%;
   min-height: 100vh;
-  padding: calc(24px + 0.75vw) 7.5vw;
+  padding: calc(24px + 0.75vw) 4vw;
 }
 
 .searchForm {
   grid-gap: calc(8px + 0.25vw);
   display: flex;
-  margin-bottom: calc(8px + 0.25vw);
-  padding: calc(24px + 0.75vw) 7.5vw;
+  margin-bottom: calc(5px + 0.25vw);
+  padding: calc(24px + 0.75vw) 3vw;
 }
 
 .searchInput {
@@ -40,8 +40,9 @@
 }
 
 #searchButton {
-  padding-right: calc(10px + 0.25vw);
-  width: 25%;
+  /* padding-right: calc(10px + 0.25vw); */
+  padding: 5px;
+  width: 50%;
   font-size: 1rem;
   background-color: rgba(82, 50, 73, 0.75);
 }
