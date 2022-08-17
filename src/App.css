@@ -215,4 +215,7 @@ img {
   .art-container {
     grid-template-columns: repeat(4, 1fr);
   }
+  .searchForm {
+    padding: calc(24px + 0.75vw) 7vw;
+  }
 }
