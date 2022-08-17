@@ -1,4 +1,4 @@
-# Deployed App: https://morganheuer.github.io/art-search-frontend/
+Deployed App: https://morganheuer.github.io/art-search-frontend/
 
 # Getting Started with Create React App
 
